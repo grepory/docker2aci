@@ -37,6 +37,7 @@ var (
 	flagInsecureAllowHTTP  bool
 	flagCompression        string
 	flagVersion            bool
+	flagOutputDir          string
 )
 
 func init() {
@@ -47,6 +48,7 @@ func init() {
 	flag.BoolVar(&flagInsecureAllowHTTP, "insecure-allow-http", false, "Uses unencrypted connections when fetching images")
 	flag.StringVar(&flagCompression, "compression", "gzip", "Type of compression to use; allowed values: gzip, none")
 	flag.BoolVar(&flagVersion, "version", false, "Print version")
+	flag.StringVar(&flagOutputDir, "output_dir", ".", "Directory where generated ACI is written")
 }
 
 func printVersion() {
@@ -80,7 +82,7 @@ func runDocker2ACI(arg string) error {
 
 	cfg := docker2aci.CommonConfig{
 		Squash:      squash,
-		OutputDir:   ".",
+		OutputDir:   flagOutputDir,
 		TmpDir:      os.TempDir(),
 		Compression: compression,
 	}
